@@ -1,0 +1,281 @@
+assert(getprop("ro.bootloader") == "1.33.2005" ||
+       getprop("ro.bootloader") == "1.33.2003AF" ||
+       getprop("ro.bootloader") == "1.33.0004" ||
+       getprop("ro.bootloader") == "1.33.2004" ||
+       getprop("ro.bootloader") == "1.33.3004" ||
+       getprop("ro.bootloader") == "1.33.0005" ||
+       getprop("ro.bootloader") == "1.33.2005" ||
+       getprop("ro.bootloader") == "1.33.3005" ||
+       getprop("ro.bootloader") == "1.33.0006" ||
+       getprop("ro.bootloader") == "1.33.2006" ||
+       getprop("ro.bootloader") == "1.33.3006" ||
+       getprop("ro.bootloader") == "1.33.0007" ||
+       getprop("ro.bootloader") == "1.33.2007" ||
+       getprop("ro.bootloader") == "1.33.3007" ||
+       getprop("ro.bootloader") == "1.33.0008" ||
+       getprop("ro.bootloader") == "1.33.2008" ||
+       getprop("ro.bootloader") == "1.33.3008" ||
+       getprop("ro.bootloader") == "1.33.0009" ||
+       getprop("ro.bootloader") == "1.33.2009" ||
+       getprop("ro.bootloader") == "1.33.0010" ||
+       getprop("ro.bootloader") == "1.33.2010" ||
+       getprop("ro.bootloader") == "1.33.0011" ||
+       getprop("ro.bootloader") == "1.33.2011" ||
+       getprop("ro.bootloader") == "1.33.3011" ||
+       getprop("ro.bootloader") == "1.33.0013" ||
+       getprop("ro.bootloader") == "1.33.2013" ||
+       getprop("ro.bootloader") == "1.33.3013" ||
+       getprop("ro.bootloader") == "1.33.0013d");
+
+
+ui_print(" ");
+ui_print(" ");
+ui_print("Welcome to PadronFroyo!!!");
+
+run_program("check_prereq", "1288429645");
+
+show_progress(0.500000, 0);
+format("MTD", "system");
+mount("MTD", "system", "/system");
+show_progress(0.500000, 40);
+
+ui_print(" ");
+ui_print(" ");
+ui_print("Extracting tools...");
+package_extract_dir("installfiles/scripts", "/tmp");
+
+set_perm(0,0,777,"/tmp/checksys.sh");
+ui_print("Checking system information...");
+run_program("/tmp/checksys.sh");
+
+ui_print(" ");
+ui_print("Extracting PadronFroyo files...");
+
+delete("/system/xbin/su");
+mount("MTD", "system", "/system");
+
+package_extract_dir("system", "/system");
+
+ui_print(" ");
+ui_print("Installing:");
+ui_print(" - PadronFroyo files...");
+
+symlink("toolbox", "/system/bin/cat");
+symlink("toolbox", "/system/bin/chmod");
+symlink("toolbox", "/system/bin/chown");
+symlink("toolbox", "/system/bin/cmp");
+symlink("toolbox", "/system/bin/date");
+symlink("toolbox", "/system/bin/dd");
+symlink("toolbox", "/system/bin/df");
+symlink("toolbox", "/system/bin/dmesg");
+symlink("toolbox", "/system/bin/getevent");
+symlink("toolbox", "/system/bin/getprop");
+symlink("toolbox", "/system/bin/hd");
+symlink("toolbox", "/system/bin/id");
+symlink("toolbox", "/system/bin/ifconfig");
+symlink("toolbox", "/system/bin/iftop");
+symlink("toolbox", "/system/bin/insmod");
+symlink("toolbox", "/system/bin/ioctl");
+symlink("toolbox", "/system/bin/ionice");
+symlink("toolbox", "/system/bin/kill");
+symlink("toolbox", "/system/bin/ln");
+symlink("toolbox", "/system/bin/log");
+symlink("toolbox", "/system/bin/ls");
+symlink("toolbox", "/system/bin/lsmod");
+symlink("toolbox", "/system/bin/mkdir");
+symlink("toolbox", "/system/bin/mount");
+symlink("toolbox", "/system/bin/mv");
+symlink("toolbox", "/system/bin/nandread");
+symlink("toolbox", "/system/bin/netstat");
+symlink("toolbox", "/system/bin/newfs_msdos");
+symlink("toolbox", "/system/bin/notify");
+symlink("toolbox", "/system/bin/printenv");
+symlink("toolbox", "/system/bin/ps");
+symlink("toolbox", "/system/bin/reboot");
+symlink("toolbox", "/system/bin/renice");
+symlink("toolbox", "/system/bin/rm");
+symlink("toolbox", "/system/bin/rmdir");
+symlink("toolbox", "/system/bin/rmmod");
+symlink("toolbox", "/system/bin/route");
+symlink("toolbox", "/system/bin/schedtop");
+symlink("toolbox", "/system/bin/sendevent");
+symlink("toolbox", "/system/bin/setconsole");
+symlink("toolbox", "/system/bin/setprop");
+symlink("toolbox", "/system/bin/sleep");
+symlink("toolbox", "/system/bin/smd");
+symlink("toolbox", "/system/bin/start");
+symlink("toolbox", "/system/bin/stop");
+symlink("toolbox", "/system/bin/sync");
+symlink("toolbox", "/system/bin/top");
+symlink("toolbox", "/system/bin/umount");
+symlink("toolbox", "/system/bin/vmstat");
+symlink("toolbox", "/system/bin/watchprops");
+symlink("toolbox", "/system/bin/wipe");
+symlink("/system/bin/su", "/system/xbin/su");
+
+set_perm_recursive(0, 0, 0755, 0644, "/system/");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
+set_perm(0, 3003, 02750, "/system/bin/netcfg");
+set_perm(0, 3004, 02755, "/system/bin/ping");
+set_perm(0, 2000, 06750, "/system/bin/run-as");
+set_perm_recursive(1002, 1002, 0755, 0440, "/system/etc/bluetooth");
+set_perm(0, 0, 0755, "/system/etc/bluetooth");
+set_perm(1000, 1000, 0640, "/system/etc/bluetooth/auto_pairing.conf");
+set_perm(3002, 3002, 0444, "/system/etc/bluetooth/blacklist.conf");
+set_perm(1002, 1002, 0440, "/system/etc/dbus.conf");
+set_perm(1014, 2000, 0550, "/system/etc/dhcpcd/dhcpcd-run-hooks");
+set_perm(0, 2000, 0550, "/system/etc/init.goldfish.sh");
+set_perm_recursive(0, 0, 0755, 0555, "/system/etc/ppp");
+set_perm_recursive(0, 2000, 0755, 0755, "/system/xbin");
+set_perm(0, 0, 06755, "/system/xbin/librank");
+set_perm(0, 0, 06755, "/system/xbin/procmem");
+set_perm(0, 0, 06755, "/system/xbin/procrank");
+set_perm(0, 0, 06755, "/system/xbin/tcpdump");
+set_perm(0, 0, 06755, "/system/bin/su");
+set_perm(0, 0, 06755, "/system/xbin/busybox");
+set_perm(0, 0, 06755, "/system/xbin/rzscontrol");
+
+
+show_progress(0.200000, 0);
+show_progress(0.200000, 10);
+
+ui_print(" - Busybox...");
+run_program("/tmp/installbusybox");
+
+# installiamo il file audio corretto 
+if file_getprop("/tmp/nfo.prop","sysboard") == "trout"
+then
+    #we have a HTC Dream
+    ui_print(" - Dream audio files...");
+    package_extract_file("installfiles/files/AudioPara_TMUS_DREA.csv", "/system/etc/AudioPara4.csv");
+
+    ui_print(" - Dream sensor files...");
+    delete("/system/lib/hw/sensors.sapphire.so");
+    package_extract_file("installfiles/files/sensors.trout.so", "/system/lib/hw/sensors.trout.so");
+else
+    #We have one brand or other of HTC Sapphire
+    if file_getprop("/tmp/nfo.prop","smisize") == "64"
+    then
+        #this is a 32B board
+    	ui_print(" - 32B Magic audio files...");
+	package_extract_file("installfiles/files/AudioPara_TMUS_SAPP.csv", "/system/etc/AudioPara4.csv");
+    else
+        #this is a 32A baord
+	ui_print(" - 32A Magic audio files...");
+	package_extract_file("installfiles/files/AudioPara_VODA_SAPP.csv", "/system/etc/AudioPara4.csv");
+    endif;
+endif;
+#now update permissions on the new file and we are done
+set_perm(1001, 1005, 0444, "/system/etc/AudioPara4.csv");
+
+# Removing old kernel modules
+set_perm(0, 0, 0777, "/tmp/remove.sh");
+run_program("/tmp/remove.sh");
+
+package_extract_file("boot.img","/tmp/boot.img");
+write_raw_image("/tmp/boot.img", "boot");
+delete("/tmp/boot.img");
+
+if file_getprop("/tmp/nfo.prop","radioseries") == "3.22"
+then 
+    #32A kernel needed 32A
+
+    ui_print(" - 32A Kernel...");
+
+    package_extract_dir("installfiles/modules/ebi1", "/system/lib/modules");
+    set_perm_recursive(0, 0, 0755, 0644, "/system/lib/modules");
+	
+    package_extract_file("installfiles/kernel/zImage-ebi1", "/tmp/zImage");
+    set_perm(0, 0, 0777, "/tmp/ebi1.sh");
+    run_program("/tmp/ebi1.sh");
+
+    # PRENDIAMO IL KERNEL ESISTENTE
+    set_perm(0, 0, 0777, "/tmp/dump_image");
+    run_program("/tmp/dump_image", "boot", "/tmp/boot.img");
+
+    # SCOMPATTIAMO IL VECCHIO KERNEL
+    set_perm(0, 0, 0777, "/tmp/unpackbootimg");
+    run_program("/tmp/unpackbootimg", "/tmp/boot.img", "/tmp/");
+
+    # RICREIAMO IL NUOVO KERNEL 
+    set_perm(0, 0, 0777, "/tmp/mkbootimg");
+    set_perm(0, 0, 0777, "/tmp/mkbootimg.sh");
+    run_program("/tmp/mkbootimg.sh");
+
+    # CARICHIAMO IL NUOVO KERNEL 
+    write_raw_image("/tmp/newboot.img", "boot");
+
+else
+    # 32B NewSPL kernel needed
+    if file_getprop("/tmp/nfo.prop","smisize") == "64" &&
+       ( file_getprop("/tmp/nfo.prop","bootloader") == "1.33.0011" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.2011" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.3011" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.0013" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.2013" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.3013" ||
+         file_getprop("/tmp/nfo.prop","bootloader") == "1.33.0013d" ) &&
+       ( file_getprop("/tmp/nfo.prop","baseband") == "2.22.27.08" ||
+         file_getprop("/tmp/nfo.prop","baseband") == "2.22.28.25" )
+    then
+        # 2708 kernel (unless the user has the fake Crios SPL 1.33.2013 ENG)
+        # if the fake version they will fail to boot since its really
+        # 1.33.2005...
+        if file_getprop("/tmp/nfo.prop","bootloader") == "1.33.2013"
+        then
+            ui_print("1.33.2013 detected, please ensure this is not Crios SPL 1.33.2013 ENG; as SPL 1.33.2005 is needed");
+        endif;
+      	
+	ui_print(" - 32B NewSPL Kernel...");
+
+	package_extract_dir("installfiles/modules/2708", "/system/lib/modules");
+	set_perm_recursive(0, 0, 0755, 0644, "/system/lib/modules");
+		
+	package_extract_file("installfiles/kernel/zImage-2708", "/tmp/zImage");
+	set_perm(0, 0, 0777, "/tmp/2708.sh");
+	run_program("/tmp/2708.sh");
+
+	# PRENDIAMO IL KERNEL ESISTENTE
+	set_perm(0, 0, 0777, "/tmp/dump_image");
+	run_program("/tmp/dump_image", "boot", "/tmp/boot.img");
+
+	# SCOMPATTIAMO IL VECCHIO KERNEL
+	set_perm(0, 0, 0777, "/tmp/unpackbootimg");
+	run_program("/tmp/unpackbootimg", "/tmp/boot.img", "/tmp/");
+
+	# RICREIAMO IL NUOVO KERNEL 
+	set_perm(0, 0, 0777, "/tmp/mkbootimg");
+	set_perm(0, 0, 0777, "/tmp/mkbootimg.sh");
+	run_program("/tmp/mkbootimg.sh");
+
+	# CARICHIAMO IL NUOVO KERNEL 
+	write_raw_image("/tmp/newboot.img", "boot");
+    else
+        # 32B kernel needed
+
+	ui_print(" - 32B Kernel...");
+
+	package_extract_dir("installfiles/modules/ebi0", "/system/lib/modules");
+	set_perm_recursive(0, 0, 0755, 0644, "/system/lib/modules");
+    endif;
+endif;
+
+
+# QUI SI INIZIA A FARE PULIZIA 
+ui_print(" ");
+ui_print("Removing installation files...");
+delete("/tmp/checksys.sh", "/tmp/remove.sh","/tmp/newboot.img");
+delete("/tmp/dumpimg", "/tmp/mkbootimg","/tmp/mkbootimg.sh");
+delete("/tmp/2708.sh", "/tmp/ebi1.sh","/tmp/ebi0.sh");
+delete("/tmp/unpackbootimg", "/tmp/base.tmp");
+delete("/tmp/boot.img-cmdline", "/tmp/boot.img-base", "/tmp/installbusybox");
+
+#Ensure we sync.. I've seen files flashed at the end of a edify script like
+#this vanish
+run_program("/sbin/sh","-c","sleep 2; sync");
+
+ui_print("");
+show_progress(0.100000, 0);
+
+unmount("/data");
+unmount("/system");
